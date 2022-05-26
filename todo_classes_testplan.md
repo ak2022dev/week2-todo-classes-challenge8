@@ -74,21 +74,20 @@ Make a list of examples of how the class will behave in different situations.
 
 _Unit tests for Todo_ 
 # 1
-todo = Todo("Wash the car")
+todo = Todo.new("Wash the car")
 todo.task # => "Wash the car" 
 
 # 2
-todo = Todo("Wash the car")
+todo = Todo.new("Wash the car")
+todo.done? # => false
+
+# 3
+todo = Todo.new("Wash the car")
 todo.mark_done! 
 todo.done? # => true 
 
-# 3
-todo = Todo("Wash the car")
-todo.done? # => false
-
 # 4
-todo = Todo("")
-todo.done? # => error  "Task is empty. Please describe the task"
+todo = Todo.new("") => error  "Cannot enter empty task into list!"
 
 _Unit tests for TodoList_
 # 1
@@ -98,8 +97,11 @@ list.incomplete => empty
 
 # 2
 list = TodoList.new
-list.give_up! => error "No tasks in list"
+list.give_up! => error "Giving up with no incomplete tasks in list!"
 
+#3
+list = TodoList.new
+list.add(nil) => error "Trying to add an invalid (nil) task!"
 
 _Integration tests_
 # 1
@@ -109,8 +111,7 @@ list.add(todo)
 list.complete => []
 list.incomplete => [todo]
 
-
-# 3
+# 2
 list = TodoList.new
 todo_1 = Todo.new("First task")
 todo_2 = Todo.new("Second task")
@@ -120,7 +121,7 @@ list.complete => []
 list.incomplete => [todo_1, todo_2]
 
 
-# 5
+# 3
 list = TodoList.new
 todo = Todo.new("First task")
 list.add(todo)
@@ -129,7 +130,7 @@ list.complete => [todo]
 list.incomplete => []
 
 
-# 7
+# 4
 list = TodoList.new
 todo_1 = Todo.new("First task")
 todo_2 = Todo.new("Second task")
@@ -140,7 +141,7 @@ list.complete => [todo_1]
 list.incomplete => [todo_2]
 
 
-# 9
+# 5
 list = TodoList.new
 todo_1 = Todo.new("First task")
 todo_2 = Todo.new("Second task")
